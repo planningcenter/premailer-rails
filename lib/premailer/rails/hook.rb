@@ -55,7 +55,7 @@ class Premailer
       end
 
       def generate_alternative_part
-        part = Mail::Part.new(:content_type => 'multipart/alternative')
+        part = Mail::Part.new(content_type: 'multipart/alternative')
         part.add_part(generate_html_part)
         part.add_part(generate_text_part)
 
@@ -68,18 +68,18 @@ class Premailer
         generate_text_part  if generate_text_part?
 
         Mail::Part.new(
-          :content_type => "text/html; charset=#{html_part.charset}",
-          :body => premailer.to_inline_css)
+          content_type: "text/html; charset=#{html_part.charset}",
+          body: premailer.to_inline_css)
       end
 
       def generate_text_part
         @text_part ||= Mail::Part.new(
-          :content_type => "text/plain; charset=#{html_part.charset}",
-          :body => premailer.to_plain_text)
+          content_type: "text/plain; charset=#{html_part.charset}",
+          body: premailer.to_plain_text)
       end
 
       def premailer
-        @premailer ||= CustomizedPremailer.new(html_part.body.to_s)
+        @premailer ||= CustomizedPremailer.new(html_part.decoded)
       end
 
       def html_part
@@ -102,7 +102,7 @@ class Premailer
       # are used for the message. If the new part is
       def replace_in_pure_html_message(new_part)
         if new_part.content_type.include?('text/html')
-          message.body = new_part.body.to_s
+          message.body = new_part.decoded
           message.content_type = new_part.content_type
         else
           message.body = nil

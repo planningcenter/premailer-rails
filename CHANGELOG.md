@@ -1,5 +1,32 @@
 # Changelog
 
+## HEAD
+
+- Only use asset pipeline if Rails is defined and if compile is true
+
+- Depend on actionmailer instead of rails
+
+- Check whether `::Rails` is defined before using it
+
+## v1.5.1
+
+- Prefer precompiled assets over asset pipeline
+
+- Improve construction of file URL when requesting from CDN
+
+- No longer use open-uri
+
+- Remove gzip unzipping after requesting file
+
+## v1.5.0
+
+- No longer support ruby 1.8
+
+- Find linked stylesheets by `rel='stylesheet'` attribute instead of
+  `type='text/css'`
+
+- Don't test hpricot on JRuby due to incompatibility
+
 ## v1.4.0
 
 - Fix attachments
@@ -13,6 +40,8 @@
 - Refactor code
 
 - Add support for precompiled assets
+
+- No longer include default `email.css`
 
 ## v1.1.0
 

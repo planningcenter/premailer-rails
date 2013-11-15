@@ -1,6 +1,3 @@
-require 'open-uri'
-require 'zlib'
-
 class Premailer
   module Rails
     module CSSHelper
@@ -11,8 +8,9 @@ class Premailer
 
       STRATEGIES = [
         CSSLoaders::CacheLoader,
+        CSSLoaders::FileSystemLoader,
         CSSLoaders::AssetPipelineLoader,
-        CSSLoaders::FileSystemLoader
+        CSSLoaders::NetworkLoader
       ]
 
       # Returns all linked CSS files concatenated as string.
@@ -24,30 +22,17 @@ class Premailer
       private
 
       def css_urls_in_doc(doc)
-        doc.search('link[@type="text/css"]').map do |link|
+        doc.search('link[@rel="stylesheet"]').map do |link|
           link.attributes['href'].to_s
         end
       end
 
       def load_css(url)
-        path = extract_path(url)
-
-        @cache[path] = STRATEGIES.each do |strategy|
-                         css = strategy.load(path)
-                         break css if css
-                       end
-      end
-
-      # Extracts the path of a url.
-      def extract_path(url)
-        if url.is_a? String
-          # Remove everything after ? including ?
-          url = url[0..(url.index('?') - 1)] if url.include? '?'
-          # Remove the host
-          url = url.sub(/^https?\:\/\/[^\/]*/, '') if url.index('http') == 0
-        end
-
-        url
+        @cache[url] =
+          STRATEGIES.each do |strategy|
+            css = strategy.load(url)
+            break css if css
+          end
       end
     end
   end

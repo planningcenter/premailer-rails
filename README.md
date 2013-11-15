@@ -4,7 +4,6 @@
 [![Gem Version](https://badge.fury.io/rb/premailer-rails.png)](http://badge.fury.io/rb/premailer-rails)
 [![Dependency Status](https://gemnasium.com/fphilipe/premailer-rails.png)](https://gemnasium.com/fphilipe/premailer-rails)
 [![Code Climate](https://codeclimate.com/github/fphilipe/premailer-rails.png)](https://codeclimate.com/github/fphilipe/premailer-rails)
-[![Coverage Status](https://coveralls.io/repos/fphilipe/premailer-rails/badge.png?branch=master)](https://coveralls.io/r/fphilipe/premailer-rails)
 
 This gem is a no config solution for the wonderful [Premailer gem](https://github.com/alexdunae/premailer) to be used with Rails.
 It uses interceptors which were introduced in Rails 3 and tweaks all mails which are `deliver`ed and adds a plain text part to them and inlines all CSS rules into the HTML part.
@@ -12,7 +11,7 @@ It uses interceptors which were introduced in Rails 3 and tweaks all mails which
 By default it inlines all inline `<style>` declarations and all the CSS files that are linked to in the HTML:
 
 ```html
-<link type='text/css' ... />
+<link rel="stylesheet" ... />
 ```
 
 Don't worry about the host in the CSS URL since this will be ignored.
@@ -50,8 +49,8 @@ pass these options on to the underlying premailer instance, specify them in an
 initializer:
 
 ```ruby
-Premailer::Rails.config.merge!(:preserve_styles => true,
-                               :remove_ids      => true)
+Premailer::Rails.config.merge!(preserve_styles: true,
+                               remove_ids:      true)
 ```
 
 For a list of options, refer to the [Premailer documentation](http://rubydoc.info/gems/premailer/1.7.3/Premailer:initialize)
@@ -60,9 +59,9 @@ The default configs are:
 
 ```ruby
 {
-  :input_encoding     => 'UTF-8',
-  :inputencoding      => 'UTF-8',
-  :generate_text_part => true
+  input_encoding:     'UTF-8',
+  inputencoding:      'UTF-8',
+  generate_text_part: true
 }
 ```
 
@@ -73,3 +72,7 @@ If you want to use another encoding make sure to specify the right one or both.
 If you don't want to automatically generate a text part from the html part, set the config `:generate_text_part` to false.
 
 Note that the options `:with_html_string` and `:css_string` are used internally and thus will be overridden.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/fphilipe/premailer-rails/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
