@@ -51,6 +51,7 @@ describe Premailer::Rails::Hook do
     before { message.content_transfer_encoding = 'quoted-printable' }
 
     it 'should maintain the value' do
+      skip "Planning Center fork opts out of this for compatability with pco-communication"
       expect(processed_message.parts.first.content_transfer_encoding).to \
         eq 'quoted-printable'
       expect(processed_message.parts.last.content_transfer_encoding).to \

@@ -13,7 +13,7 @@ class Premailer
         doc = load_html(html)
         options = @options.merge(css_string: CSSHelper.css_for_doc(doc))
 
-        super(doc.to_s, options)
+        super(html, options)
       end
     end
   end
