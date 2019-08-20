@@ -67,6 +67,14 @@ nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       message = base_message
       content_part = message
 
+      if part_types.include? :text
+        text_part = Mail::Part.new do
+          body TEXT_PART
+          content_type 'text/plain; charset=UTF-8'
+        end
+        content_part.text_part = text_part
+      end
+
       if part_types.include?(:html) and part_types.include?(:text)
         content_part = Mail::Part.new(content_type: 'multipart/alternative')
         message.add_part(content_part)
@@ -78,14 +86,6 @@ nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           content_type 'text/html; charset=UTF-8'
         end
         content_part.html_part = html_part
-      end
-
-      if part_types.include? :text
-        text_part = Mail::Part.new do
-          body TEXT_PART
-          content_type 'text/plain; charset=UTF-8'
-        end
-        content_part.text_part = text_part
       end
 
       if part_types.include? :attachment
