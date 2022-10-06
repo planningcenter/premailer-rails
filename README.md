@@ -1,5 +1,7 @@
 # premailer-rails
 
+Let's run CI.
+
 CSS styled emails without the hassle.
 
 [![Build Status][build-image]][build-link]
